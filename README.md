@@ -1,5 +1,5 @@
 # WASTE4THINK NGSI CONNECTOR
-Module for reading csv file from pilot site users and sending it to Orion context broker.
+API for reading csv file from pilot site users and sending it to Orion context broker.
 
 # Installation
 1. Download the repository.
@@ -13,12 +13,11 @@ If you want to use another port, change it in the configuration file bin/www.js.
 # Software to use
 1. Nodejs
 2. Express(module Node)
-3. json
 
 # Docker
 1. For docker installation https://docs.docker.com/install/#desktop
-2. Download docker image using "docker pull marijaborisov/csvmodule".
-3. Run the downloaded docker image: "docker run -p 3000:3000 -d marijaborisov/csvmodule".
+2. Download docker image using "TODO".
+3. Run the downloaded docker image: "docker run -p 3000:3000 -d TODO".
 4. To make image from Dockerfile: docker build -t csvmodule .
 5. To run container from image, for example: docker run -p 3000:3000 -d csvmodule
 
