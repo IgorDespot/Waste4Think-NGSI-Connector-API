@@ -1,0 +1,11 @@
+{
+    "orion-path": "http://130.206.117.164/v2/",
+    "file-extentions": [".csv"],
+    "ngsi-converter": {
+        "parse-options": {
+            ".csv": {
+                "delimiter": ";"
+            }
+        }
+    }
+}
