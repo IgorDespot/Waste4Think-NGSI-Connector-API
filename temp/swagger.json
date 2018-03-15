@@ -1,0 +1,415 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "W4ThinkAPI",
+    "description": "W4T API that communicate with Orion Context Broker",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Igor Despot",
+      "email": "igor.despot@eng.rs"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "Entities",
+      "description": "Information about entities"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/entities": {
+      "get": {
+        "tags": [
+          "Entities"
+        ],
+        "summary": "Find all entities",
+        "description": "Retruns all entities can recive service and service path",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Fiware-Service",
+            "in": "header",
+            "description": "Location of entities",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Fiware-ServicePath",
+            "in": "header",
+            "description": "Precise location of entities",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositPointType"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Entities"
+        ],
+        "summary": "Upload file with entitiy info",
+        "description": "Create all entities from user supplyed file (.csv, json, text)",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Fiware-Service",
+            "in": "header",
+            "description": "Location of entities",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Fiware-ServicePath",
+            "in": "header",
+            "description": "Precise location of entities",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositPointType"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entities/{entityId}": {
+      "get": {
+        "tags": [
+          "Entities"
+        ],
+        "summary": "Find entity by ID",
+        "description": "Returns single Entity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "entityId",
+            "in": "path",
+            "description": "ID of entity to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositPointType"
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/entities/update": {
+      "post": {
+        "tags": [
+          "Entities"
+        ],
+        "summary": "Update entities from user file",
+        "description": "Update enitites from user supplyed file (.csv, json, text)",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Fiware-Service",
+            "in": "header",
+            "description": "Location of entities",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Fiware-ServicePath",
+            "in": "header",
+            "description": "Precise location of entities",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositPointType"
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/entities/type/{typeId}": {
+      "get": {
+        "tags": [
+          "Entities"
+        ],
+        "summary": "Find entity by type",
+        "description": "Returns single Entity",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "typeId",
+            "in": "path",
+            "description": "ID of entity to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositPointType"
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DepositPointType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id of entity"
+        },
+        "type": {
+          "type": "string",
+          "description": "entity type"
+        },
+        "ModelName": {
+          "type": "string"
+        },
+        "brandName": {
+          "type": "string"
+        },
+        "cargoVolume": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "string"
+        },
+        "colors": {
+          "type": "string"
+        },
+        "compliantWith": {
+          "type": "string"
+        },
+        "depth": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "integer"
+        },
+        "insertHoleHeight": {
+          "type": "integer"
+        },
+        "insertHoleWidth": {
+          "type": "integer"
+        },
+        "insertHolesNumber": {
+          "type": "integer"
+        },
+        "loadType": {
+          "type": "string"
+        },
+        "madeof": {
+          "type": "string"
+        },
+        "manufacturerName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "width": {
+          "type": "string"
+        }
+      }
+    },
+    "DepositionPoint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id of entity"
+        },
+        "type": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "refSortingType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "refCollectionPointType": {
+          "type": "string"
+        },
+        "storedWastOrigin": {
+          "type": "string"
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "address": {
+          "type": "string"
+        },
+        "fillingLevel": {
+          "type": "integer"
+        },
+        "cargoWeight": {
+          "type": "integer"
+        },
+        "temperature": {
+          "type": "integer"
+        },
+        "methaneConcentration": {
+          "type": "string"
+        },
+        "regulation": {
+          "type": "string"
+        },
+        "responsible": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "dateServiceStarted": {
+          "type": "string"
+        },
+        "dateLastEmptying": {
+          "type": "string"
+        },
+        "nextActuationDeadline": {
+          "type": "string"
+        },
+        "actuationHours": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "string"
+        },
+        "dateLastCleaning": {
+          "type": "string"
+        },
+        "nextCleaningDeadline": {
+          "type": "string"
+        },
+        "refCollectionPointlsle": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "annotations": {
+          "type": "string"
+        },
+        "areaServed": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "refDevice": {
+          "type": "string"
+        },
+        "coordxUTM": {
+          "type": "integer"
+        },
+        "coordyUTM": {
+          "type": "integer"
+        },
+        "POINT_X": {
+          "type": "integer"
+        },
+        "POINT_Y": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
