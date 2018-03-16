@@ -11,8 +11,6 @@ entityock = {
   "type": "typeme"
 }
 
-console.log(entity);
-
 describe('toBeDefined checks', () => {
 
   it('config should be defined or error will throw', () => {
@@ -173,11 +171,7 @@ describe('Payload checks', () => {
     expect(payload.fail).toEqual(jasmine.any(Function));
   });
 
-  it('should return JSON object', () => {
+  it('success should return JSON object', () => {
     expect(payload.success(entityock)).toEqual(jasmine.any(Object))
   });
-
-  it('should return JSON object', () => {
-    expect(payload.fail(entityock)).toEqual(jasmine.any(Object))
-  });
-})
+});
