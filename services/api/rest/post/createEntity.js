@@ -4,7 +4,9 @@ let upload = uploadModule(uploadModule.multer.memoryStorage());
 var ngsiConverter = require('lib/ngsi-converter');
 const { entity }    = require('lib/orion-module-new');
 
-// Check different errors and handle displaying them to user
+/**
+ *  Function that handle file upload, check extentions and update entities from it
+ */
 exports = module.exports = function (req, res, next) {
 
     let service = req.headers['fiware-service'];
@@ -58,6 +60,10 @@ exports = module.exports = function (req, res, next) {
         });
 }
 
+/**
+ * Make Promise.all non fail-fast
+ * @param {Promise} promise 
+ */
 function entityFailWrapper(promise) {
     return promise
     .catch((err) => {
