@@ -4,7 +4,14 @@ const orionPath = config["orion-path"];
 
 const { entity }    = require('lib/orion-module-new');
 
-console.log(typeof entity)
+var payload = require('../../lib/orion-module-new/entity/payload');
+
+entityock = {
+  "id": "mockme",
+  "type": "typeme"
+}
+
+console.log(entity);
 
 describe('toBeDefined checks', () => {
 
@@ -151,3 +158,26 @@ describe('Create entiies function checks', () => {
   });  
   
 });
+
+describe('Payload checks', () => {
+  
+  it('should be object', () => {
+    expect(payload).toEqual(jasmine.any(Object));
+  });
+
+  it('should be a function', () => {
+    expect(payload.success).toEqual(jasmine.any(Function));
+  });
+
+  it('should be a function', () => {
+    expect(payload.fail).toEqual(jasmine.any(Function));
+  });
+
+  it('should return JSON object', () => {
+    expect(payload.success(entityock)).toEqual(jasmine.any(Object))
+  });
+
+  it('should return JSON object', () => {
+    expect(payload.fail(entityock)).toEqual(jasmine.any(Object))
+  });
+})
