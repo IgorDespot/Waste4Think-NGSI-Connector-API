@@ -1,8 +1,11 @@
 let uploadModule = require('lib/upload-module');
 let upload = uploadModule(uploadModule.multer.memoryStorage());
+const check = require('./serviceCheck');
 
 var ngsiConverter = require('lib/ngsi-converter');
-const { entity }    = require('lib/orion-module-new');
+const {
+    entity
+} = require('lib/orion-module-new');
 
 /**
  *  Function that handle file upload, check extentions and update entities from it
@@ -14,13 +17,13 @@ exports = module.exports = function (req, res, next) {
 
     if (service === undefined)
         res.json({
-            "status":[{
+            "status": [{
                 "Error": 'Failed to proivde service'
             }]
-         })
+        })
     else if (service_path === undefined)
         res.json({
-            "status":[{
+            "status": [{
                 "Error": 'Failed to proivde service_path'
             }]
         })
@@ -35,27 +38,27 @@ exports = module.exports = function (req, res, next) {
                 var data = req.file.buffer.toString();
                 var extension = uploadModule.getFileExtension(req.file);
                 ngsiConverter(data, extension)
-                .then(
-                    (data) => {
-                        var promises = [];
-                        var responses = [];
-                        data.forEach((curr, index) => {
-                            promises[index] = Promise.resolve(curr)
-                            .then((obj) => {
-                                responses[index] = entityFailWrapper(entity
-                                    .entityCreatePromise(service,service_path,obj));
-                                return responses[index];
+                    .then(
+                        (data) => {
+                            var promises = [];
+                            var responses = [];
+                            data.forEach((curr, index) => {
+                                promises[index] = Promise.resolve(curr)
+                                    .then((obj) => {
+                                        responses[index] = entityFailWrapper(entity
+                                            .entityCreatePromise(service, service_path, obj));
+                                        return responses[index];
+                                    });
                             });
-                        });
-                        return Promise.all(promises);
-                    }
-                )
-                .then((msg) => {
-                    res.json(msg);
-                })
-                .catch((err) => 
-                    res.json(err)
-                );               
+                            return Promise.all(promises);
+                        }
+                    )
+                    .then((msg) => {
+                        res.json(msg);
+                    })
+                    .catch((err) =>
+                        res.json(err)
+                    );
             }
         });
 }
@@ -66,7 +69,7 @@ exports = module.exports = function (req, res, next) {
  */
 function entityFailWrapper(promise) {
     return promise
-    .catch((err) => {
-        return Promise.resolve(err);
-    });
+        .catch((err) => {
+            return Promise.resolve(err);
+        });
 }
