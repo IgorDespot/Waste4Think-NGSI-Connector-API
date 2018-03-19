@@ -162,6 +162,21 @@ describe('Orion module tests', () => {
       .done(done);
   });
 
+  it('should return a status of 200', function (done) {
+    frisby
+      .get(base_url + mock_id)
+      .expect('status', 200)
+      .done(done);
+  });
+
+
+  it('should return a status of 200', function (done) {
+    frisby
+      .get(mock_type)
+      .expect('status', 200)
+      .done(done);
+  });
+
   it("returns object", function (done) {
     request.get(base_url, function (error, response, body) {
       expect(JSON.parse(body)).toEqual(jasmine.any(Object))
