@@ -2,6 +2,10 @@ const config = require('config');
 
 const orionPath = config["orion-path"];
 
+var request = require("request");
+
+const frisby = require('frisby');
+
 const {
   entity
 } = require('lib/orion-module-new');
@@ -12,6 +16,10 @@ entityock = {
   "id": "mockme",
   "type": "typeme"
 }
+
+base_url = "http://localhost:3000/v1/entities";
+mock_type = "http://localhost:3000/v1/entities/type/DepositPointType"
+mock_id = "/DepositPointType:4";
 
 describe('Orion module tests', () => {
 
@@ -47,7 +55,7 @@ describe('Orion module tests', () => {
 
   it(`
     should make call to orion contex broker using api
-    and return array of objects representing entities
+    and return single object representing entity
   `, () => {
     entity.singleEntityPromise()
       .then((data) => {
@@ -148,5 +156,35 @@ describe('Orion module tests', () => {
   it('success should return JSON object', () => {
     expect(payload.success(entityock)).toEqual(jasmine.any(Object))
   });
+
+  it ('should return a status of 200', function (done) {
+    frisby
+      .get(base_url)
+      .expect('status', 200)
+      .done(done);
+  });
+
+  it("returns object", function(done) {
+    request.get(base_url, function(error, response, body) {
+      expect(JSON.parse(body)).toEqual(jasmine.any(Object))
+      done();
+    });
+  });
+
+  it("returns single entity object", function(done) {
+    request.get(base_url + mock_id, function(error, response, body) {
+      expect(JSON.parse(body)).toEqual(jasmine.any(Object))
+      done();
+    });
+  });
+
+  it("returns single entity object", function(done) {
+    request.get(mock_type, function(error, response, body) {
+      expect(JSON.parse(body)).toEqual(jasmine.any(Object))
+      done();
+    });
+  });
+
+  
 
 });
