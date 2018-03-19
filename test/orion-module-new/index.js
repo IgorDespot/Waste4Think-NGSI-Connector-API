@@ -1,14 +1,9 @@
 const config = require('config');
-
 const orionPath = config["orion-path"];
-
-var request = require("request");
-
+const request = require("request");
 const frisby = require('frisby');
-
-const {
-  entity
-} = require('lib/orion-module-new');
+const { entity } = require('lib/orion-module-new');
+const header = require('../../lib/orion-module-new/entity/headerCheck');
 
 var payload = require('../../lib/orion-module-new/entity/payload');
 
@@ -16,6 +11,9 @@ entityock = {
   "id": "mockme",
   "type": "typeme"
 }
+
+mock_service = "mock",
+mock_servicePath = "mock"
 
 base_url = "http://localhost:3000/v1/entities";
 mock_type = "http://localhost:3000/v1/entities/type/DepositPointType"
@@ -157,34 +155,36 @@ describe('Orion module tests', () => {
     expect(payload.success(entityock)).toEqual(jasmine.any(Object))
   });
 
-  it ('should return a status of 200', function (done) {
+  it('should return a status of 200', function (done) {
     frisby
       .get(base_url)
       .expect('status', 200)
       .done(done);
   });
 
-  it("returns object", function(done) {
-    request.get(base_url, function(error, response, body) {
+  it("returns object", function (done) {
+    request.get(base_url, function (error, response, body) {
       expect(JSON.parse(body)).toEqual(jasmine.any(Object))
       done();
     });
   });
 
-  it("returns single entity object", function(done) {
-    request.get(base_url + mock_id, function(error, response, body) {
+  it("returns single entity object", function (done) {
+    request.get(base_url + mock_id, function (error, response, body) {
       expect(JSON.parse(body)).toEqual(jasmine.any(Object))
       done();
     });
   });
 
-  it("returns single entity object", function(done) {
-    request.get(mock_type, function(error, response, body) {
+  it("returns single entity object", function (done) {
+    request.get(mock_type, function (error, response, body) {
       expect(JSON.parse(body)).toEqual(jasmine.any(Object))
       done();
     });
   });
 
-  
+  it("should return object", () => {
+    expect(header(mock_service, mock_servicePath)).toEqual(jasmine.any(Object));
+  });
 
 });
